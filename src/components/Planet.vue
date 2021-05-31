@@ -17,7 +17,13 @@
     </div>
     <div v-if="showSurface">
         <p class="content">{{ currentPlanet.geology.content }}</p>
-        <p class="source">Source: <a :href="currentPlanet.geology.source" class="bold">Wikipedia</a></p>
+        <p class="source">
+            Source: 
+            <a rel="noreferrer" target="_blank" :href="currentPlanet.geology.source" class="bold">
+                Wikipedia
+            </a>
+            <img class="source-link" src="../assets/icon-source.svg" alt="link to Wikipedia" />
+        </p>
     </div>
     <div class="info">
         <Infobox :content="currentPlanet.rotation" title="ROTATION TIME" />

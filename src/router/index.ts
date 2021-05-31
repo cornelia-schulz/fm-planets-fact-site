@@ -10,11 +10,6 @@ import Venus from '../views/Venus.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/earth',
-    name: 'Earth',
-    component: Earth
-  },
-  {
     path: '/',
     name: 'Mercury',
     component: Mercury
@@ -23,6 +18,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/venus',
     name: 'Venus',
     component: Venus
+  },
+  {
+    path: '/earth',
+    name: 'Earth',
+    component: Earth
   },
   {
     path: '/jupiter',
@@ -50,8 +50,7 @@ const routes: Array<RouteRecordRaw> = [
     component: Uranus
   },
   {
-    path: '/mercury',
-    name: 'Mercury',
+    path: '/:pathMatch(.*)*',
     component: Mercury
   }
 ]
