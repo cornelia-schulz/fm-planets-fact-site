@@ -284,10 +284,8 @@ import Infobox from './Infobox.vue';
   mounted() {
     const tabs = document.getElementsByClassName('tab')
     for(var i = 0; i < tabs.length; i++){
-        console.log('ehllo')
         tabs[i].classList.add('border-'+ this.planet.toLowerCase())
     }
-    console.log('border-'+ this.planet.toLowerCase())
   }
 })
 export default class Planet extends Vue {

@@ -1,15 +1,19 @@
 <template>
   <nav class="navbar">
-    <div class="menu-toggle-container">
-      <h1>THE PLANETS</h1>
-      <label for="menu-toggle">
-        <img src="../assets/icon-hamburger.svg" alt="menu toggle" />
-      </label>
-      <input type="checkbox" id="menu-toggle"/>
-    </div>
-    <ul class="menu">
-      <li v-for="(planet, index) in planets" :key="index">
-        {{ planet }}
+    <h1>THE PLANETS</h1>
+    <label for="menu-toggle">
+      <img src="../assets/icon-hamburger.svg" alt="menu toggle" />
+    </label>
+    <input type="checkbox" id="menu-toggle"/>
+    <ul id="menu">
+      <li class="menu-items" v-for="(planet, index) in planets" :key="index">
+        <router-link :to="planet.toLowerCase()">
+          <span>
+            <div class="circle"></div>
+            {{ planet }}
+          </span>
+          <span class="menu-items-chevron">></span>
+        </router-link>
       </li>
     </ul>
   </nav>
@@ -26,11 +30,9 @@ import { Options, Vue } from 'vue-class-component';
   }
 })
 export default class Navbar extends Vue {
-  // planets!: Array<String>
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 @import '../scss/variables/colours.scss';
 
@@ -39,24 +41,26 @@ export default class Navbar extends Vue {
 }
 
 h1 {
+  display: inline-block;
   font-size: 28px;
   line-height: 36px;
   letter-spacing: -1.05px;
-}
-
-.menu-toggle-container {
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
+  text-align: left;
+  width: 50%;
 }
 
 #menu-toggle {
   display: none;
 }
 
-.menu {
-  background-color: #ffa500;
-  width: 780px;
+label {
+  display: inline-block;
+  text-align: right;
+  width: 50%;
+}
+
+#menu {
+  width: 100%;
   overflow: hidden;
   max-height: 0;
   padding: 0;
@@ -64,7 +68,39 @@ h1 {
   -webkit-transition: all 0.3s ease;
 }
 
-#menu-toggle:checked + .menu {
-  max-height: 100px;
+#menu-toggle:checked + #menu {
+  max-height: 100%;
+}
+
+.circle {
+  background: $light-blue;
+  border: 1px solid $light-blue;
+  border-radius: 50%;
+  display: inline-block;
+  height: 12px;
+  margin-right: 10px;
+  width: 12px;
+}
+
+.menu-items {
+  border-bottom: 1px solid rgba($color: $white, $alpha: 0.5);
+  font-family: Spartan;
+  font-size: 15px;
+  padding-bottom: 24px;
+  padding-top: 24px;
+  text-align: left;
+  text-transform: uppercase;
+
+  a {
+    color: $white;
+    display: flex;
+    justify-content: space-between;
+    text-decoration: none;
+  }
+}
+
+.menu-items-chevron {
+  font-size: 10px;
+  opacity: 0.5;
 }
 </style>
