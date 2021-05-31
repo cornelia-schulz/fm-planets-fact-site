@@ -5,10 +5,10 @@
       <li class="tab" @click="switchTab('structure')">STRUCTURE</li>
       <li class="tab" @click="switchTab('surface')">SURFACE</li>
     </ul>
-    <img v-if="showOverview" class="planet-img" :src="currentPlanet.images.planet" :alt="planet" />
-    <img v-if="showStructure" class="planet-img" :src="currentPlanet.images.internal" :alt="planet" />
+    <img v-if="showOverview" class="planet-img" :src="currentPlanet.images.planet" :alt="planet" :style="{ height: currentPlanet.size + 'px' }" />
+    <img v-if="showStructure" class="planet-img" :src="currentPlanet.images.internal" :alt="planet" :style="{ height: currentPlanet.size + 'px' }" />
     <div class="surface-images" v-if="showSurface">
-        <img class="planet-img" :src="currentPlanet.images.planet" :alt="planet" />
+        <img class="planet-img" :src="currentPlanet.images.planet" :alt="planet" :style="{ height: currentPlanet.size + 'px' }" />
         <img class="planet-img-overlay" :src="currentPlanet.images.geology" :alt="planet" />
     </div>
     
@@ -79,7 +79,7 @@ import Infobox from './Infobox.vue';
             "internal": require("../assets/planet-mercury-internal.svg"),
             "geology": require("../assets/geology-mercury.png"),
             },
-            "colour": "#419ebb"
+            "size": 111
         },
         {
             "name": "Venus",
@@ -103,7 +103,8 @@ import Infobox from './Infobox.vue';
             "planet": require("../assets/planet-venus.svg"),
             "internal": require("../assets/planet-venus-internal.svg"),
             "geology": require("../assets/geology-venus.png")
-            }
+            },
+            "size": 154
         },
         {
             "name": "Earth",
@@ -127,7 +128,8 @@ import Infobox from './Infobox.vue';
             "planet": require("../assets/planet-earth.svg"),
             "internal": require("../assets/planet-earth-internal.svg"),
             "geology": require("../assets/geology-earth.png")
-            }
+            },
+            "size": 173
         },
         {
             "name": "Mars",
@@ -151,7 +153,8 @@ import Infobox from './Infobox.vue';
             "planet": require("../assets/planet-mars.svg"),
             "internal": require("../assets/planet-mars-internal.svg"),
             "geology": require("../assets/geology-mars.png")
-            }
+            },
+            "size": 129
         },
         {
             "name": "Jupiter",
@@ -175,7 +178,8 @@ import Infobox from './Infobox.vue';
             "planet": require("../assets/planet-jupiter.svg"),
             "internal": require("../assets/planet-jupiter-internal.svg"),
             "geology": require("../assets/geology-jupiter.png")
-            }
+            },
+            "size": 224
         },
         {
             "name": "Saturn",
@@ -199,7 +203,8 @@ import Infobox from './Infobox.vue';
             "planet": require("../assets/planet-saturn.svg"),
             "internal": require("../assets/planet-saturn-internal.svg"),
             "geology": require("../assets/geology-saturn.png")
-            }
+            },
+            "size": 256
         },
         {
             "name": "Uranus",
@@ -223,7 +228,8 @@ import Infobox from './Infobox.vue';
             "planet": require("../assets/planet-uranus.svg"),
             "internal": require("../assets/planet-uranus-internal.svg"),
             "geology": require("../assets/geology-uranus.png")
-            }
+            },
+            "size": 176
         },
         {
             "name": "Neptune",
@@ -247,7 +253,8 @@ import Infobox from './Infobox.vue';
             "planet": require("../assets/planet-neptune.svg"),
             "internal": require("../assets/planet-neptune-internal.svg"),
             "geology": require("../assets/geology-neptune.png")
-            }
+            },
+            "size": 173
         }
       ],
       showOverview: true,
@@ -291,7 +298,6 @@ import Infobox from './Infobox.vue';
   },
   created() {
       this.getCurrentPlanetData()
-      console.log(this.colour)
   },
   mounted() {
     const tabs = document.getElementsByClassName('tab')
@@ -339,10 +345,8 @@ export default class Planet extends Vue {
 }
 
 .planet-img {
-    height: 154px;
     margin-bottom: 75px;
     margin-top: 75px;
-    width: 154px;
 }
 
 h2 {
