@@ -48,6 +48,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/uranus',
     name: 'Uranus',
     component: Uranus
+  },
+  {
+    path: '/mercury',
+    name: 'Mercury',
+    component: Mercury
   }
 ]
 
