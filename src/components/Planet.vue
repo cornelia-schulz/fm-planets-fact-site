@@ -1,20 +1,47 @@
 <template>
   <div class="planet">
-    <img :src="currentPlanet.images.planet" :alt="planet" />
+    <ul class="information-selector">
+      <li class="tab active" @click="switchTab('overview')">OVERVIEW</li>
+      <li class="tab" @click="switchTab('structure')">STRUCTURE</li>
+      <li class="tab" @click="switchTab('surface')">SURFACE</li>
+    </ul>
+    <img class="planet-img" :src="currentPlanet.images.planet" :alt="planet" />
     <h1>{{ planet }}</h1>
-    <p>{{ currentPlanet }}</p>
+    <div v-if="showOverview">
+        <p class="content">{{ currentPlanet.overview.content }}</p>
+        <p class="source">Source: <a :href="currentPlanet.overview.source" class="bold">Wikipedia</a></p>
+    </div>
+    <div v-if="showStructure">
+        <p class="content">{{ currentPlanet.structure.content }}</p>
+        <p class="source">Source: <a :href="currentPlanet.structure.source" class="bold">Wikipedia</a></p>
+    </div>
+    <div v-if="showSurface">
+        <p class="content">{{ currentPlanet.geology.content }}</p>
+        <p class="source">Source: <a :href="currentPlanet.geology.source" class="bold">Wikipedia</a></p>
+    </div>
+    <div class="info">
+        <Infobox :content="currentPlanet.rotation" title="ROTATION TIME" />
+        <Infobox :content="currentPlanet.revolution" title="REVOLUTION TIME" />
+        <Infobox :content="currentPlanet.radius" title="RADIUS" />
+        <Infobox :content="currentPlanet.temperature" title="AVERAGE TEMP." />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component';
+import Infobox from './Infobox.vue';
 
 @Options({
+  components: {
+      Infobox
+  },
   props: {
     planet: String
   },
   data() {
     return {
+      colour: "",
       currentPlanet: {},
       planets: [
         {
@@ -38,8 +65,9 @@ import { Options, Vue } from 'vue-class-component';
             "images": {
             "planet": require("../assets/planet-mercury.svg"),
             "internal": require("../assets/planet-mercury-internal.svg"),
-            "geology": require("../assets/geology-mercury.png")
-            }
+            "geology": require("../assets/geology-mercury.png"),
+            },
+            "colour": "#419ebb"
         },
         {
             "name": "Venus",
@@ -209,16 +237,57 @@ import { Options, Vue } from 'vue-class-component';
             "geology": require("../assets/geology-neptune.png")
             }
         }
-        ]
+      ],
+      showOverview: true,
+      showStructure: false,
+      showSurface: false
     }
   },
   methods: {
     getCurrentPlanetData() {
-      this.currentPlanet = this.planets.find(p => p.name === this.planet)
+      this.currentPlanet = this.planets.find((p: any) => p.name === this.planet)
+    },
+    switchTab(switchTo: String) {
+      const tabs = document.getElementsByClassName('tab')
+      for(var i = 0; i < tabs.length; i++)
+      {
+          tabs[i].classList.remove('active')
+      }
+
+      if (switchTo === 'overview')
+      {
+          this.showOverview = true
+          this.showStructure = false
+          this.showSurface = false
+          tabs[0].classList.add('active')
+      }
+      else if (switchTo === 'structure')
+      {
+          this.showOverview = false
+          this.showStructure = true
+          this.showSurface = false
+          tabs[1].classList.add('active')
+      }
+      else if (switchTo === 'surface')
+      {
+          this.showOverview = false
+          this.showStructure = false
+          this.showSurface = true
+          tabs[2].classList.add('active')
+      }
     }
   },
   created() {
       this.getCurrentPlanetData()
+      console.log(this.colour)
+  },
+  mounted() {
+    const tabs = document.getElementsByClassName('tab')
+    for(var i = 0; i < tabs.length; i++){
+        console.log('ehllo')
+        tabs[i].classList.add('border-'+ this.planet.toLowerCase())
+    }
+    console.log('border-'+ this.planet.toLowerCase())
   }
 })
 export default class Planet extends Vue {
@@ -229,18 +298,93 @@ export default class Planet extends Vue {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 @import '../scss/variables/colours.scss';
-h3 {
-  margin: 40px 0 0;
+
+.planet {
+    padding: 24px;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
+
+.information-selector {
+    border-bottom: 1px solid rgba($color: $white, $alpha: 0.5);
+    border-top: 1px solid rgba($color: $white, $alpha: 0.5);
+    display: flex;
+    justify-content: space-evenly;
 }
-li {
-  display: inline-block;
-  margin: 0 10px;
+
+.tab {
+    align-self: stretch;
+    font-family: spartan;
+    font-size: 9px;
+    font-weight: bold;
+    letter-spacing: 1.92px;
+    line-height: 10px;
+    list-style-type: none;
+    opacity: 0.5;
+    padding: 20px 5px;
+
+    &.active {
+        border-bottom: 4px solid;
+    }
 }
-a {
-  color: $light-blue;
+
+.planet-img {
+    height: 154px;
+    margin-bottom: 75px;
+    margin-top: 75px;
+    width: 154px;
+}
+
+h1 {
+    font-size: 40px;
+    font-weight: 400 ;
+    line-height: 52px;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+}
+
+.content {
+    font-family: Spartan;
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 22px;
+    margin-bottom: 32px;
+    text-align: center;
+}
+
+.source {
+    font-family: Spartan;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 25px;
+    margin-bottom: 28px;
+    opacity: 0.5;
+
+    a {
+        color: $white;
+        font-weight: 700;
+    }
+}
+.border-mercury {
+    border-color: $light-blue !important;
+}
+.border-venus {
+    border-color: $yellow !important;
+}
+.border-earth {
+    border-color: $purple !important;
+}
+.border-mars {
+    border-color: $light-red !important;
+}
+.border-jupiter {
+    border-color: $red !important;
+}
+.border-saturn {
+    border-color: $orange !important;
+}
+.border-uranus {
+    border-color: $green !important;
+}
+.border-neptune {
+    border-color: $blue !important;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <nav class="navbar">
-    Planets
+    THE PLANETS
   </nav>
 </template>
 
