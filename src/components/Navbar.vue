@@ -9,7 +9,7 @@
       <li class="menu-items" v-for="(planet, index) in planets" :key="index">
         <router-link :to="planet.toLowerCase()">
           <span>
-            <div class="circle"></div>
+            <div class="circle" :class="planet.toLowerCase()"></div>
             {{ planet }}
           </span>
           <span class="menu-items-chevron">></span>
@@ -102,5 +102,38 @@ label {
 .menu-items-chevron {
   font-size: 10px;
   opacity: 0.5;
+}
+
+.mercury {
+    background-color: $light-blue !important;
+    border-color: $light-blue !important;
+}
+.venus {
+    background-color: $yellow !important;
+    border-color: $yellow !important;
+}
+.earth {
+    background-color: $purple !important;
+    border-color: $purple !important;
+}
+.mars {
+    background-color: $light-red !important;
+    border-color: $light-red !important;
+}
+.jupiter {
+    background-color: $red !important;
+    border-color: $red !important;
+}
+.saturn {
+    background-color: $orange !important;
+    border-color: $orange !important;
+}
+.uranus {
+    background-color: $green !important;
+    border-color: $green !important;
+}
+.neptune {
+    background-color: $blue !important;
+    border-color: $blue !important;
 }
 </style>

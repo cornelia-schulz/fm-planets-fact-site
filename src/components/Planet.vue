@@ -371,7 +371,7 @@ h2 {
     height: 100px;
     left: 50%;
     position: absolute;
-    right: 50%;
+    transform: translateX(-50%);
 }
 
 .source {
