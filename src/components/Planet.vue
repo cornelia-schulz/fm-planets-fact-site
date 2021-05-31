@@ -5,7 +5,13 @@
       <li class="tab" @click="switchTab('structure')">STRUCTURE</li>
       <li class="tab" @click="switchTab('surface')">SURFACE</li>
     </ul>
-    <img class="planet-img" :src="currentPlanet.images.planet" :alt="planet" />
+    <img v-if="showOverview" class="planet-img" :src="currentPlanet.images.planet" :alt="planet" />
+    <img v-if="showStructure" class="planet-img" :src="currentPlanet.images.internal" :alt="planet" />
+    <div class="surface-images" v-if="showSurface">
+        <img class="planet-img" :src="currentPlanet.images.planet" :alt="planet" />
+        <img class="planet-img-overlay" :src="currentPlanet.images.geology" :alt="planet" />
+    </div>
+    
     <h2>{{ planet }}</h2>
     <div v-if="showOverview">
         <p class="content">{{ currentPlanet.overview.content }}</p>
@@ -354,6 +360,18 @@ h2 {
     line-height: 22px;
     margin-bottom: 32px;
     text-align: center;
+}
+
+.surface-images {
+    position: relative;
+}
+
+.planet-img-overlay {
+    bottom: 10px;
+    height: 100px;
+    left: 50%;
+    position: absolute;
+    right: 50%;
 }
 
 .source {
