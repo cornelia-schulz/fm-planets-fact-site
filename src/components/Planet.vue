@@ -6,7 +6,7 @@
       <li class="tab" @click="switchTab('surface')">SURFACE</li>
     </ul>
     <img class="planet-img" :src="currentPlanet.images.planet" :alt="planet" />
-    <h1>{{ planet }}</h1>
+    <h2>{{ planet }}</h2>
     <div v-if="showOverview">
         <p class="content">{{ currentPlanet.overview.content }}</p>
         <p class="source">Source: <a :href="currentPlanet.overview.source" class="bold">Wikipedia</a></p>
@@ -300,7 +300,7 @@ export default class Planet extends Vue {
 @import '../scss/variables/colours.scss';
 
 .planet {
-    padding: 24px;
+    padding: 0 24px 24px;
 }
 
 .information-selector {
@@ -308,6 +308,8 @@ export default class Planet extends Vue {
     border-top: 1px solid rgba($color: $white, $alpha: 0.5);
     display: flex;
     justify-content: space-evenly;
+    margin-left: -24px;
+    margin-right: -24px;
 }
 
 .tab {
@@ -319,7 +321,7 @@ export default class Planet extends Vue {
     line-height: 10px;
     list-style-type: none;
     opacity: 0.5;
-    padding: 20px 5px;
+    padding: 20px 0;
 
     &.active {
         border-bottom: 4px solid;
@@ -333,7 +335,7 @@ export default class Planet extends Vue {
     width: 154px;
 }
 
-h1 {
+h2 {
     font-size: 40px;
     font-weight: 400 ;
     line-height: 52px;
