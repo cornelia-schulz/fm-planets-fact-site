@@ -2,16 +2,16 @@
   <nav class="navbar navbar-small">
     <h1>THE PLANETS</h1>
     <label for="menu-toggle">
-      <img src="../assets/icon-hamburger.svg" alt="menu toggle" />
+      <img src="../assets/icon-hamburger.svg" alt="menu toggle" loading="lazy" />
     </label>
     <input type="checkbox" id="menu-toggle"/>
     <ul id="menu">
       <li class="menu-items" v-for="(planet, index) in planets" :key="index">
         <router-link :to="planet.toLowerCase()" @click="closeMenu()">
-          <span>
+          <div>
             <div class="circle" :class="planet.toLowerCase()"></div>
             {{ planet }}
-          </span>
+          </div>
           <span class="menu-items-chevron">></span>
         </router-link>
       </li>
@@ -186,6 +186,7 @@ label {
 
   .menu-items {
     font-size: 11px;
+    font-weight: bold;
   }
 }
 

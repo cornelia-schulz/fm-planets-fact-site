@@ -7,14 +7,14 @@
             <li class="tab" @click="switchTab('surface')">SURFACE</li>
             </ul>
             <div class="surface-images" v-if="showOverview">
-                <img class="planet-img" :src="currentPlanet.images.planet" :alt="planet" :style="{ maxHeight: imageHeight + 'px'}" />
+                <img class="planet-img" :src="currentPlanet.images.planet" :alt="planet" :style="{ maxHeight: imageHeight + 'px'}" loading="lazy" />
             </div>
             <div class="surface-images" v-if="showStructure">
-                <img class="planet-img" :src="currentPlanet.images.internal" :alt="planet" :style="{ maxHeight: imageHeight + 'px'}" />
+                <img class="planet-img" :src="currentPlanet.images.internal" :alt="planet" :style="{ maxHeight: imageHeight + 'px'}" loading="lazy" />
             </div>
             <div class="surface-images" v-if="showSurface">
-                <img class="planet-img" :src="currentPlanet.images.planet" :alt="planet" :style="{ maxHeight: imageHeight + 'px'}" />
-                <img class="planet-img-overlay" :src="currentPlanet.images.geology" :alt="planet" />
+                <img class="planet-img" :src="currentPlanet.images.planet" :alt="planet" :style="{ maxHeight: imageHeight + 'px'}" loading="lazy" />
+                <img class="planet-img-overlay" :src="currentPlanet.images.geology" :alt="planet" loading="lazy" />
             </div>
             
             <div class="information">
@@ -568,11 +568,13 @@ h2 {
             align-items: center;
             display: flex;
             justify-content: space-between;
+            margin-bottom: 50px;
+            margin-top: 80px;
         }
 
         .information {
             flex-direction: column;
-            width: 50%;
+            width: 30%;
         }
 
         .information-text {
