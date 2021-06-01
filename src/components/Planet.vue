@@ -6,8 +6,12 @@
             <li class="tab" @click="switchTab('structure')">STRUCTURE</li>
             <li class="tab" @click="switchTab('surface')">SURFACE</li>
             </ul>
-            <img v-if="showOverview" class="planet-img" :src="currentPlanet.images.planet" :alt="planet" :style="{ maxHeight: imageHeight + 'px'}" />
-            <img v-if="showStructure" class="planet-img" :src="currentPlanet.images.internal" :alt="planet" :style="{ maxHeight: imageHeight + 'px'}" />
+            <div class="surface-images" v-if="showOverview">
+                <img class="planet-img" :src="currentPlanet.images.planet" :alt="planet" :style="{ maxHeight: imageHeight + 'px'}" />
+            </div>
+            <div class="surface-images" v-if="showStructure">
+                <img class="planet-img" :src="currentPlanet.images.internal" :alt="planet" :style="{ maxHeight: imageHeight + 'px'}" />
+            </div>
             <div class="surface-images" v-if="showSurface">
                 <img class="planet-img" :src="currentPlanet.images.planet" :alt="planet" :style="{ maxHeight: imageHeight + 'px'}" />
                 <img class="planet-img-overlay" :src="currentPlanet.images.geology" :alt="planet" />
@@ -351,6 +355,8 @@ export default class Planet extends Vue {
 @import '../scss/variables/colours.scss';
 
 .planet {
+    margin: 0 auto;
+    max-width: 1440px;
     padding: 0 24px 24px;
 }
 
