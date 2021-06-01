@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar">
+  <nav class="navbar navbar-small">
     <h1>THE PLANETS</h1>
     <label for="menu-toggle">
       <img src="../assets/icon-hamburger.svg" alt="menu toggle" />
@@ -13,6 +13,18 @@
             {{ planet }}
           </span>
           <span class="menu-items-chevron">></span>
+        </router-link>
+      </li>
+    </ul>
+  </nav>
+  <nav class="navbar navbar-large">
+    <h1>THE PLANETS</h1>
+    <ul class="menu">
+      <li class="menu-items" v-for="(planet, index) in planets" :key="index">
+        <router-link :to="planet.toLowerCase()">
+          <span>
+            {{ planet }}
+          </span>
         </router-link>
       </li>
     </ul>
@@ -38,6 +50,14 @@ export default class Navbar extends Vue {
 
 .navbar {
   padding: 16px 24px;
+}
+
+.navbar-large {
+  display: none;
+  
+  h1 {
+    text-align: center;
+  }
 }
 
 h1 {
@@ -66,6 +86,15 @@ label {
   padding: 0;
   margin: 0 auto;
   -webkit-transition: all 0.3s ease;
+}
+
+.menu {
+  display: flex;
+  justify-content: space-between;
+
+  .menu-items {
+    border: none;
+  }
 }
 
 #menu-toggle:checked + #menu {
@@ -135,5 +164,15 @@ label {
 .neptune {
     background-color: $blue !important;
     border-color: $blue !important;
+}
+
+@media only screen and (min-width: 768px) {
+  .navbar-small {
+    display: none;
+  }
+
+  .navbar-large {
+    display: block;
+  }
 }
 </style>

@@ -44,4 +44,16 @@ export default class Infobox extends Vue {
     color: $white;
     text-transform: uppercase;
 }
+
+@media only screen and (min-width: 768px) {
+  .infobox {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .content {
+    font-size: 24px;
+    margin-top: 8px;
+  }
+}
 </style>

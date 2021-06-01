@@ -5,32 +5,48 @@
       <li class="tab" @click="switchTab('structure')">STRUCTURE</li>
       <li class="tab" @click="switchTab('surface')">SURFACE</li>
     </ul>
-    <img v-if="showOverview" class="planet-img" :src="currentPlanet.images.planet" :alt="planet" :style="{ height: currentPlanet.size + 'px' }" />
-    <img v-if="showStructure" class="planet-img" :src="currentPlanet.images.internal" :alt="planet" :style="{ height: currentPlanet.size + 'px' }" />
+    <img v-if="showOverview" class="planet-img" :src="currentPlanet.images.planet" :alt="planet" :style="{ height: imageHeight + 'px'}" />
+    <img v-if="showStructure" class="planet-img" :src="currentPlanet.images.internal" :alt="planet" :style="{ height: imageHeight + 'px' }" />
     <div class="surface-images" v-if="showSurface">
-        <img class="planet-img" :src="currentPlanet.images.planet" :alt="planet" :style="{ height: currentPlanet.size + 'px' }" />
+        <img class="planet-img" :src="currentPlanet.images.planet" :alt="planet" :style="{ height: imageHeight + 'px' }" />
         <img class="planet-img-overlay" :src="currentPlanet.images.geology" :alt="planet" />
     </div>
     
-    <h2>{{ planet }}</h2>
-    <div v-if="showOverview">
-        <p class="content">{{ currentPlanet.overview.content }}</p>
-        <p class="source">Source: <a :href="currentPlanet.overview.source" class="bold">Wikipedia</a></p>
+    <div class="information">
+        <div class="information-text">
+            <h2>{{ planet }}</h2>
+            <div v-if="showOverview">
+                <p class="content">{{ currentPlanet.overview.content }}</p>
+                <p class="source">
+                    Source: <a :href="currentPlanet.overview.source" class="bold">Wikipedia</a>
+                    <img class="source-link" src="../assets/icon-source.svg" alt="link to Wikipedia" />
+                </p>
+            </div>
+            <div v-if="showStructure">
+                <p class="content">{{ currentPlanet.structure.content }}</p>
+                <p class="source">
+                    Source: <a :href="currentPlanet.structure.source" class="bold">Wikipedia</a>
+                    <img class="source-link" src="../assets/icon-source.svg" alt="link to Wikipedia" />
+                </p>
+            </div>
+            <div v-if="showSurface">
+                <p class="content">{{ currentPlanet.geology.content }}</p>
+                <p class="source">
+                    Source: 
+                    <a rel="noreferrer" target="_blank" :href="currentPlanet.geology.source" class="bold">
+                        Wikipedia
+                    </a>
+                    <img class="source-link" src="../assets/icon-source.svg" alt="link to Wikipedia" />
+                </p>
+            </div>
+        </div>
+        <ul class="information-selector-large">
+            <li class="tab active" @click="switchTab('overview')"><span class="decimal">01</span>OVERVIEW</li>
+            <li class="tab" @click="switchTab('structure')"><span class="decimal">02</span>INTERNAL STRUCTURE</li>
+            <li class="tab" @click="switchTab('surface')"><span class="decimal">03</span>SURFACE GEOLOGY</li>
+        </ul>
     </div>
-    <div v-if="showStructure">
-        <p class="content">{{ currentPlanet.structure.content }}</p>
-        <p class="source">Source: <a :href="currentPlanet.structure.source" class="bold">Wikipedia</a></p>
-    </div>
-    <div v-if="showSurface">
-        <p class="content">{{ currentPlanet.geology.content }}</p>
-        <p class="source">
-            Source: 
-            <a rel="noreferrer" target="_blank" :href="currentPlanet.geology.source" class="bold">
-                Wikipedia
-            </a>
-            <img class="source-link" src="../assets/icon-source.svg" alt="link to Wikipedia" />
-        </p>
-    </div>
+
     <div class="info">
         <Infobox :content="currentPlanet.rotation" title="ROTATION TIME" />
         <Infobox :content="currentPlanet.revolution" title="REVOLUTION TIME" />
@@ -55,6 +71,7 @@ import Infobox from './Infobox.vue';
     return {
       colour: "",
       currentPlanet: {},
+      imageSize: 0,
       planets: [
         {
             "name": "Mercury",
@@ -265,6 +282,18 @@ import Infobox from './Infobox.vue';
   methods: {
     getCurrentPlanetData() {
       this.currentPlanet = this.planets.find((p: any) => p.name === this.planet)
+      this.setImageHeight()
+    },
+    setImageHeight() {
+        if (window.innerWidth < 768){
+            this.imageHeight = this.currentPlanet.size
+        }
+        else if (window.innerWidth < 900) {
+            this.imageHeight = this.currentPlanet.size * 1.65
+        }
+        else {
+            this.imageHeight = this.currentPlanet.size * 2.604
+        }
     },
     switchTab(switchTo: String) {
       const tabs = document.getElementsByClassName('tab')
@@ -323,9 +352,15 @@ export default class Planet extends Vue {
     border-bottom: 1px solid rgba($color: $white, $alpha: 0.5);
     border-top: 1px solid rgba($color: $white, $alpha: 0.5);
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     margin-left: -24px;
     margin-right: -24px;
+    padding-left: 24px;
+    padding-right: 24px;
+}
+
+.information-selector-large {
+    display: none;
 }
 
 .tab {
@@ -391,6 +426,11 @@ h2 {
         font-weight: 700;
     }
 }
+
+.source-link {
+    margin-left: 3px;
+}
+
 .border-mercury {
     border-color: $light-blue !important;
 }
@@ -414,5 +454,101 @@ h2 {
 }
 .border-neptune {
     border-color: $blue !important;
+}
+
+@media only screen and (min-width: 768px) {
+    .information-selector {
+        display: none;
+    }
+
+    .information-selector-large {
+        display: block;
+        flex: 1;
+    }
+
+    .tab {
+        align-self: stretch;
+        border-color: rgba($color: $white, $alpha: 0.5) !important;
+        border: 1px solid rgba($color: $white, $alpha: 0.5);
+        margin-bottom: 10px;
+        margin-left: 12%;
+        opacity: 1;
+        padding: 15px 0;
+        text-align: left;
+    }
+
+    .decimal {
+        margin-left: 10px;
+        margin-right: 10px;
+        opacity: 0.5;
+    }
+
+    .information {
+        align-items: center;
+        display: flex;
+    }
+
+    .information-text {
+        text-align: left;
+        width: 48%;
+    }
+
+    .content {
+        text-align: left;
+    }
+
+    .info {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .border-mercury {
+        &.active {
+            background-color: $light-blue !important;
+            border-color: $light-blue !important;
+        }
+    }
+    .border-venus:active {
+        &.active {
+            background-color: $yellow !important;
+            border-color: $yellow !important;
+        }
+    }
+    .border-earth:active {
+        &.active {
+            background-color: $purple !important;
+            border-color: $purple !important;
+        }
+    }
+    .border-mars {
+        &.active{
+            background-color: $light-red !important;
+            border-color: $light-red !important;
+        }   
+    }
+    .border-jupiter:active {
+        &.active {
+            background-color: $red !important;
+            border-color: $red !important;
+        }
+    }
+    .border-saturn:active {
+        &.active {
+            background-color: $orange !important;
+            border-color: $orange !important;
+        }
+    }
+    .border-uranus:active {
+        &.active {
+            background-color: $green !important;
+            border-color: $green !important;
+        }
+    }
+    .border-neptune:active {
+        &.active {
+            background-color: $blue !important;
+            border-color: $blue !important;
+        }
+    }
 }
 </style>
