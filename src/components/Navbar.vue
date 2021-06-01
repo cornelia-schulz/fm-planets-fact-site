@@ -7,7 +7,7 @@
     <input type="checkbox" id="menu-toggle"/>
     <ul id="menu">
       <li class="menu-items" v-for="(planet, index) in planets" :key="index">
-        <router-link :to="planet.toLowerCase()">
+        <router-link :to="planet.toLowerCase()" @click="closeMenu()">
           <span>
             <div class="circle" :class="planet.toLowerCase()"></div>
             {{ planet }}
@@ -38,6 +38,14 @@ import { Options, Vue } from 'vue-class-component';
   data() {
     return {
       planets: ['Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune']
+    }
+  },
+  methods: {
+    closeMenu() {
+      var checkbox = document.querySelector("input[type=checkbox]") as HTMLInputElement;
+      if (checkbox !== null) {
+        checkbox.checked = false
+      }
     }
   }
 })
@@ -172,7 +180,28 @@ label {
   }
 
   .navbar-large {
+    border-bottom: 1px solid rgba($color: $white, $alpha: 0.5);
     display: block;
+  }
+
+  .menu-items {
+    font-size: 11px;
+  }
+}
+
+@media only screen and (min-width: 980px) {
+  .navbar-large {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+
+    h1 {
+      text-align: left;
+    }
+  }
+
+  .menu {
+    flex: 1;
   }
 }
 </style>

@@ -1,51 +1,54 @@
 <template>
   <div class="planet">
-    <ul class="information-selector">
-      <li class="tab active" @click="switchTab('overview')">OVERVIEW</li>
-      <li class="tab" @click="switchTab('structure')">STRUCTURE</li>
-      <li class="tab" @click="switchTab('surface')">SURFACE</li>
-    </ul>
-    <img v-if="showOverview" class="planet-img" :src="currentPlanet.images.planet" :alt="planet" :style="{ height: imageHeight + 'px'}" />
-    <img v-if="showStructure" class="planet-img" :src="currentPlanet.images.internal" :alt="planet" :style="{ height: imageHeight + 'px' }" />
-    <div class="surface-images" v-if="showSurface">
-        <img class="planet-img" :src="currentPlanet.images.planet" :alt="planet" :style="{ height: imageHeight + 'px' }" />
-        <img class="planet-img-overlay" :src="currentPlanet.images.geology" :alt="planet" />
-    </div>
+      <div class="planet-img-and-info">
+          <ul class="information-selector">
+            <li class="tab active" @click="switchTab('overview')">OVERVIEW</li>
+            <li class="tab" @click="switchTab('structure')">STRUCTURE</li>
+            <li class="tab" @click="switchTab('surface')">SURFACE</li>
+            </ul>
+            <img v-if="showOverview" class="planet-img" :src="currentPlanet.images.planet" :alt="planet" :style="{ maxHeight: imageHeight + 'px'}" />
+            <img v-if="showStructure" class="planet-img" :src="currentPlanet.images.internal" :alt="planet" :style="{ maxHeight: imageHeight + 'px'}" />
+            <div class="surface-images" v-if="showSurface">
+                <img class="planet-img" :src="currentPlanet.images.planet" :alt="planet" :style="{ maxHeight: imageHeight + 'px'}" />
+                <img class="planet-img-overlay" :src="currentPlanet.images.geology" :alt="planet" />
+            </div>
+            
+            <div class="information">
+                <div class="information-text">
+                    <h2>{{ planet }}</h2>
+                    <div v-if="showOverview">
+                        <p class="content">{{ currentPlanet.overview.content }}</p>
+                        <p class="source">
+                            Source: <a :href="currentPlanet.overview.source" class="bold">Wikipedia</a>
+                            <img class="source-link" src="../assets/icon-source.svg" alt="link to Wikipedia" />
+                        </p>
+                    </div>
+                    <div v-if="showStructure">
+                        <p class="content">{{ currentPlanet.structure.content }}</p>
+                        <p class="source">
+                            Source: <a :href="currentPlanet.structure.source" class="bold">Wikipedia</a>
+                            <img class="source-link" src="../assets/icon-source.svg" alt="link to Wikipedia" />
+                        </p>
+                    </div>
+                    <div v-if="showSurface">
+                        <p class="content">{{ currentPlanet.geology.content }}</p>
+                        <p class="source">
+                            Source: 
+                            <a rel="noreferrer" target="_blank" :href="currentPlanet.geology.source" class="bold">
+                                Wikipedia
+                            </a>
+                            <img class="source-link" src="../assets/icon-source.svg" alt="link to Wikipedia" />
+                        </p>
+                    </div>
+                </div>
+                <ul class="information-selector-large">
+                    <li class="tab active" @click="switchTab('overview')"><span class="decimal">01</span>OVERVIEW</li>
+                    <li class="tab" @click="switchTab('structure')"><span class="decimal">02</span>INTERNAL STRUCTURE</li>
+                    <li class="tab" @click="switchTab('surface')"><span class="decimal">03</span>SURFACE GEOLOGY</li>
+                </ul>
+            </div>
+      </div>
     
-    <div class="information">
-        <div class="information-text">
-            <h2>{{ planet }}</h2>
-            <div v-if="showOverview">
-                <p class="content">{{ currentPlanet.overview.content }}</p>
-                <p class="source">
-                    Source: <a :href="currentPlanet.overview.source" class="bold">Wikipedia</a>
-                    <img class="source-link" src="../assets/icon-source.svg" alt="link to Wikipedia" />
-                </p>
-            </div>
-            <div v-if="showStructure">
-                <p class="content">{{ currentPlanet.structure.content }}</p>
-                <p class="source">
-                    Source: <a :href="currentPlanet.structure.source" class="bold">Wikipedia</a>
-                    <img class="source-link" src="../assets/icon-source.svg" alt="link to Wikipedia" />
-                </p>
-            </div>
-            <div v-if="showSurface">
-                <p class="content">{{ currentPlanet.geology.content }}</p>
-                <p class="source">
-                    Source: 
-                    <a rel="noreferrer" target="_blank" :href="currentPlanet.geology.source" class="bold">
-                        Wikipedia
-                    </a>
-                    <img class="source-link" src="../assets/icon-source.svg" alt="link to Wikipedia" />
-                </p>
-            </div>
-        </div>
-        <ul class="information-selector-large">
-            <li class="tab active" @click="switchTab('overview')"><span class="decimal">01</span>OVERVIEW</li>
-            <li class="tab" @click="switchTab('structure')"><span class="decimal">02</span>INTERNAL STRUCTURE</li>
-            <li class="tab" @click="switchTab('surface')"><span class="decimal">03</span>SURFACE GEOLOGY</li>
-        </ul>
-    </div>
 
     <div class="info">
         <Infobox :content="currentPlanet.rotation" title="ROTATION TIME" />
@@ -308,6 +311,7 @@ import Infobox from './Infobox.vue';
           this.showStructure = false
           this.showSurface = false
           tabs[0].classList.add('active')
+          tabs[3].classList.add('active')
       }
       else if (switchTo === 'structure')
       {
@@ -315,6 +319,7 @@ import Infobox from './Infobox.vue';
           this.showStructure = true
           this.showSurface = false
           tabs[1].classList.add('active')
+          tabs[4].classList.add('active')
       }
       else if (switchTo === 'surface')
       {
@@ -322,6 +327,7 @@ import Infobox from './Infobox.vue';
           this.showStructure = false
           this.showSurface = true
           tabs[2].classList.add('active')
+          tabs[5].classList.add('active')
       }
     }
   },
@@ -508,13 +514,13 @@ h2 {
             border-color: $light-blue !important;
         }
     }
-    .border-venus:active {
+    .border-venus {
         &.active {
             background-color: $yellow !important;
             border-color: $yellow !important;
         }
     }
-    .border-earth:active {
+    .border-earth {
         &.active {
             background-color: $purple !important;
             border-color: $purple !important;
@@ -526,28 +532,61 @@ h2 {
             border-color: $light-red !important;
         }   
     }
-    .border-jupiter:active {
+    .border-jupiter {
         &.active {
             background-color: $red !important;
             border-color: $red !important;
         }
     }
-    .border-saturn:active {
+    .border-saturn {
         &.active {
             background-color: $orange !important;
             border-color: $orange !important;
         }
     }
-    .border-uranus:active {
+    .border-uranus {
         &.active {
             background-color: $green !important;
             border-color: $green !important;
         }
     }
-    .border-neptune:active {
+    .border-neptune {
         &.active {
             background-color: $blue !important;
             border-color: $blue !important;
+        }
+    }
+
+    @media only screen and (min-width: 980px) {
+        .planet-img-and-info {
+            align-items: center;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .information {
+            flex-direction: column;
+            width: 50%;
+        }
+
+        .information-text {
+            width: 80%;
+        }
+
+        .surface-images {
+            flex: 1;
+        }
+
+        .information-selector-large {
+            width: 80%;
+        }
+
+        .tab {
+            margin-left: 0;
+        }
+
+        .info {
+            justify-content: space-around;
         }
     }
 }
